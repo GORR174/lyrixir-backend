@@ -1,0 +1,39 @@
+spring.application.name: lyrixir
+
+logging:
+  file:
+    name: lyrixir-backend.log
+  logback:
+    rollingpolicy:
+      max-history: 5
+      max-file-size: 10MB
+
+lyrixir:
+  logging:
+    service.enabled: false
+
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  boot:
+    admin.client:
+      url: http://localhost:8084
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: ${BTG_DATASOURCE_URL:jdbc:postgresql://localhost:5432/lyrixir}
+    username: ${BTG_DATASOURCE_USERNAME:USER_LYRIXIR}
+    password: ${BTG_DATASOURCE_PASSWORD:USER_LYRIXIR1}
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: create-drop
+
+management:
+  endpoints:
+    web.exposure:
+      include: "health,logfile,info"
+  endpoint:
+    health.show-details: always
