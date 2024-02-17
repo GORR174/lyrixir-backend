@@ -1,8 +1,6 @@
 package net.catstack.lyrixir.exception
 
-import lombok.extern.slf4j.Slf4j
 import net.catstack.lyrixir.dto.AdapterResponse
-import net.catstack.lyrixir.util.decorateLog
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -26,7 +24,7 @@ class ExceptionHandler {
 
     @ExceptionHandler(BaseServiceException::class)
     fun baseServiceException(e: BaseServiceException): ResponseEntity<AdapterResponse<Any>> {
-        logger.error(decorateLog("Something went wrong!"), e)
+        logger.error("Something went wrong!", e)
 
         return ResponseEntity(AdapterResponse.error(e), HttpStatus.OK)
     }

@@ -1,6 +1,8 @@
 spring.application.name: lyrixir
 
 logging:
+  level:
+    net.catstack: INFO
   file:
     name: lyrixir-backend.log
   logback:

@@ -1,6 +1,5 @@
 package net.catstack.lyrixir.aspect
 
-import net.catstack.lyrixir.util.decorateLog
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.After
 import org.aspectj.lang.annotation.Aspect
@@ -17,11 +16,11 @@ class ServiceLoggingAspect {
 
     @Before("execution(public * net.catstack.lyrixir.service..*.*(..))")
     fun logServiceStart(jp: JoinPoint) {
-        logger.info(decorateLog("Service ${jp.target.javaClass.simpleName}: start execution"))
+        logger.info("Service ${jp.target.javaClass.simpleName}: start execution")
     }
 
     @After("execution(public * net.catstack.lyrixir.service..*.*(..))")
     fun logServiceEnd(jp: JoinPoint) {
-        logger.info(decorateLog("Service ${jp.target.javaClass.simpleName}: stop execution"))
+        logger.info("Service ${jp.target.javaClass.simpleName}: stop execution")
     }
 }

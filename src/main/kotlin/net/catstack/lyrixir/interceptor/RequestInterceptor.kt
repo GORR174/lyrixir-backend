@@ -2,13 +2,11 @@ package net.catstack.lyrixir.interceptor
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import net.catstack.lyrixir.util.decorateLog
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
-import java.lang.Exception
-import java.util.UUID
+import java.util.*
 
 @Component
 class RequestInterceptor : HandlerInterceptor {
@@ -20,7 +18,7 @@ class RequestInterceptor : HandlerInterceptor {
         MDC.put("requestId", uid)
         MDC.put("requestEndpoint", request.requestURI)
 
-        logger.info(decorateLog("Starting request..."))
+        logger.debug("Starting request...")
         return true
     }
 
@@ -30,7 +28,7 @@ class RequestInterceptor : HandlerInterceptor {
         handler: Any,
         ex: Exception?
     ) {
-        logger.info(decorateLog("Request complete!"))
+        logger.debug("Request complete!")
 
         MDC.remove("requestId")
         MDC.remove("requestEndpoint")
