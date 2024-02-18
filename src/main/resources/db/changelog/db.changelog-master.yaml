@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Gorr
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/changeset-1.0.sql
