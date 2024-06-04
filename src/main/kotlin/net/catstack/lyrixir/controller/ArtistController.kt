@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 // TODO: 404 fix
@@ -23,8 +24,9 @@ class ArtistController(
     }
 
     @GetMapping("/artists")
-    fun getArtists(): AdapterResponse<GetArtistsResponseDto> {
-        return AdapterResponse.success(artistService.getArtists())
+    fun getArtists(@RequestParam("page", defaultValue = "0") page: Int,
+                   @RequestParam("size", defaultValue = "20") size: Int): AdapterResponse<GetArtistsResponseDto> {
+        return AdapterResponse.success(artistService.getArtists(page, size))
     }
 
 }

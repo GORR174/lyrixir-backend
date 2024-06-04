@@ -1,12 +1,12 @@
 package net.catstack.lyrixir.service
 
-import io.minio.MinioClient
 import net.catstack.lyrixir.dto.request.AddArtistRequestDto
 import net.catstack.lyrixir.dto.response.AddArtistResponseDto
 import net.catstack.lyrixir.dto.response.GetArtistsResponseDto
 import net.catstack.lyrixir.mapper.ArtistMapper
 import net.catstack.lyrixir.repository.ArtistRepository
 import net.catstack.lyrixir.util.injectLogger
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -26,8 +26,8 @@ class ArtistService(
         return response
     }
 
-    fun getArtists(): GetArtistsResponseDto {
-        val artistModels = artistRepository.findAll()
+    fun getArtists(page: Int, size: Int): GetArtistsResponseDto {
+        val artistModels = artistRepository.findAll(PageRequest.of(page, size)).content
 
         return mapper.entityListToDto(artistModels)
     }
