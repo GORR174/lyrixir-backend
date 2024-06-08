@@ -5,3 +5,9 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: db/changelog/changeset/changeset-1.0.sql
+  - changeSet:
+      id: 2
+      author: Gorr
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/changeset-2.0.sql

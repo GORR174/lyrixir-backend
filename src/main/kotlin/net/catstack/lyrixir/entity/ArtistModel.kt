@@ -10,4 +10,8 @@ open class ArtistModel : BaseModel() {
     open var name: String? = null
     @Column(name = "profile_img")
     open var profileImage: String? = null
+
+    override fun toString(): String {
+        return "ArtistModel(name=$name, profileImage=$profileImage)"
+    }
 }
