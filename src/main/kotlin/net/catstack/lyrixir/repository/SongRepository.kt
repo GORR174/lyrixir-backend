@@ -2,23 +2,16 @@ package net.catstack.lyrixir.repository
 
 import net.catstack.lyrixir.entity.SongModel
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.time.LocalDateTime
 
 @Repository
 interface SongRepository : JpaRepository<SongModel, Long> {
-    @Modifying
-    @Query(nativeQuery = true, value = "UPDATE song SET text_vector = to_tsvector(:text), updated = :updated where id = :id")
-    fun setTextVector(text: String, id: Long, updated: Date?)
+    @Query(nativeQuery = true, value = "INSERT INTO song (artist_id, song_name, text, text_vector, created, updated) " +
+            "VALUES (:#{#model.artist.id}, :#{#model.songName}, :#{#model.text}, to_tsvector(:#{#model.text}), :timestamp, :timestamp) " +
+            "returning *")
+    fun addSong(model: SongModel, timestamp: LocalDateTime): SongModel
 
-    @Transactional
-    fun addSong(songModel: SongModel): SongModel {
-        val model = save(songModel)
-        setTextVector(model.text ?: "", model.id, model.created)
-
-        return model
-    }
+    fun addSong(model: SongModel) = addSong(model, LocalDateTime.now())
 }
