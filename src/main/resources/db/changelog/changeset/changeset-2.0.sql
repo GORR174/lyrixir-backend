@@ -3,7 +3,7 @@ CREATE TABLE song (
     artist_id integer NOT NULL REFERENCES artist(id),
     song_name varchar(255) NOT NULL UNIQUE,
     text text NOT NULL,
-    text_vector tsvector NOT NULL,
+    text_vector tsvector,
     created timestamp(6),
     updated timestamp(6)
 );
