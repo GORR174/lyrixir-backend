@@ -1,7 +1,10 @@
 package net.catstack.lyrixir.service
 
 import net.catstack.lyrixir.dto.request.AddSongRequestDto
+import net.catstack.lyrixir.dto.request.FindSongRequestDto
+import net.catstack.lyrixir.dto.response.FindSongResponseDto
 import net.catstack.lyrixir.dto.response.SongResponseDto
+import net.catstack.lyrixir.dto.response.SongWithSearchIndex
 import net.catstack.lyrixir.entity.SongModel
 import net.catstack.lyrixir.mapper.SongMapper
 import net.catstack.lyrixir.repository.ArtistRepository
@@ -24,5 +27,22 @@ class SongService(
         })
 
         return songMapper.songModelToSong(songModel)
+    }
+
+    fun findSong(requestDto: FindSongRequestDto): FindSongResponseDto {
+        val songsWithIndexes = songRepository.findByArtistIdAndTextContainsIgnoreCase(requestDto.artistId, requestDto.searchText)
+            .map(songMapper::songModelToSong)
+            .map { song ->
+                SongWithSearchIndex(song, findSongIndexes(song.text, requestDto.searchText))
+            }
+
+        return FindSongResponseDto(songsWithIndexes)
+    }
+
+    private fun findSongIndexes(text: String, searchText: String): List<Long> {
+        return searchText.toRegex(setOf(RegexOption.IGNORE_CASE))
+            .findAll(text)
+            .map { it.range.first.toLong() }
+            .toList()
     }
 }

@@ -1,5 +1,6 @@
 package net.catstack.lyrixir.repository
 
+import net.catstack.lyrixir.entity.ArtistModel
 import net.catstack.lyrixir.entity.SongModel
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -14,4 +15,6 @@ interface SongRepository : JpaRepository<SongModel, Long> {
     fun addSong(model: SongModel, timestamp: LocalDateTime): SongModel
 
     fun addSong(model: SongModel) = addSong(model, LocalDateTime.now())
+
+    fun findByArtistIdAndTextContainsIgnoreCase(artistId: Long, searchText: String): List<SongModel>
 }
