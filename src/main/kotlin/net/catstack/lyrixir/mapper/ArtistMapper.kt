@@ -15,4 +15,5 @@ interface ArtistMapper {
     fun entityListToDtoList(artist: List<ArtistModel>): List<ArtistDto>
     @Mapping(target = "artists", source = "entityList")
     fun entityListToDto(entityList: List<ArtistModel>, dummy: Int = 0): GetArtistsResponseDto
+    fun entityToDto(entity: ArtistModel): ArtistDto
 }

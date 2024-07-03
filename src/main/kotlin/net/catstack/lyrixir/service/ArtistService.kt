@@ -2,6 +2,7 @@ package net.catstack.lyrixir.service
 
 import net.catstack.lyrixir.dto.request.AddArtistRequestDto
 import net.catstack.lyrixir.dto.response.AddArtistResponseDto
+import net.catstack.lyrixir.dto.response.ArtistDto
 import net.catstack.lyrixir.dto.response.GetArtistsResponseDto
 import net.catstack.lyrixir.mapper.ArtistMapper
 import net.catstack.lyrixir.repository.ArtistRepository
@@ -30,5 +31,9 @@ class ArtistService(
         val artistModels = artistRepository.findAll(PageRequest.of(page, size)).content
 
         return mapper.entityListToDto(artistModels)
+    }
+
+    fun getArtist(id: Long): ArtistDto {
+        return mapper.entityToDto(artistRepository.findById(id).orElse(null))
     }
 }

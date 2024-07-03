@@ -17,4 +17,6 @@ interface SongRepository : JpaRepository<SongModel, Long> {
     fun addSong(model: SongModel) = addSong(model, LocalDateTime.now())
 
     fun findByArtistIdAndTextContainsIgnoreCase(artistId: Long, searchText: String): List<SongModel>
+
+    fun findByArtistId(artistId: Long): List<SongModel>
 }

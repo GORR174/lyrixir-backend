@@ -3,6 +3,7 @@ package net.catstack.lyrixir.controller
 import net.catstack.lyrixir.dto.AdapterResponse
 import net.catstack.lyrixir.dto.request.AddArtistRequestDto
 import net.catstack.lyrixir.dto.response.AddArtistResponseDto
+import net.catstack.lyrixir.dto.response.ArtistDto
 import net.catstack.lyrixir.dto.response.GetArtistsResponseDto
 import net.catstack.lyrixir.service.ArtistService
 import org.springframework.web.bind.annotation.GetMapping
@@ -29,4 +30,8 @@ class ArtistController(
         return AdapterResponse.success(artistService.getArtists(page, size))
     }
 
+    @GetMapping("/getArtist")
+    fun getArtist(@RequestParam("id") id: Long): AdapterResponse<ArtistDto> {
+        return AdapterResponse.success(artistService.getArtist(id))
+    }
 }

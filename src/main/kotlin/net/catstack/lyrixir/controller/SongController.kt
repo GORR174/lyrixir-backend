@@ -25,4 +25,9 @@ class SongController(val songService: SongService) {
     fun findSong(@RequestParam artistId: Long, @RequestParam searchText: String): AdapterResponse<FindSongResponseDto> {
         return AdapterResponse.success(songService.findSong(FindSongRequestDto(artistId, searchText)))
     }
+
+    @GetMapping("/getAllSongs")
+    fun findAllSongsNames(@RequestParam artistId: Long): AdapterResponse<List<SongResponseDto>> {
+        return AdapterResponse.success(songService.findAllSongNames(artistId))
+    }
 }

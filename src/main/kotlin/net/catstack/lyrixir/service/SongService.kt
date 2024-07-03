@@ -33,7 +33,7 @@ class SongService(
         val songsWithIndexes = songRepository.findByArtistIdAndTextContainsIgnoreCase(requestDto.artistId, requestDto.searchText)
             .map(songMapper::songModelToSong)
             .map { song ->
-                SongWithSearchIndex(song, findSongIndexes(song.text, requestDto.searchText))
+                SongWithSearchIndex(song, findSongIndexes(song.text ?: "", requestDto.searchText))
             }
 
         return FindSongResponseDto(songsWithIndexes)
@@ -43,6 +43,14 @@ class SongService(
         return searchText.toRegex(setOf(RegexOption.IGNORE_CASE))
             .findAll(text)
             .map { it.range.first.toLong() }
+            .toList()
+    }
+
+    fun findAllSongNames(artistId: Long): List<SongResponseDto> {
+        return songRepository.findByArtistId(artistId)
+            .map {
+                SongResponseDto(it.id, artistId, it.songName ?: throw RuntimeException("Song name not found"), null)
+            }
             .toList()
     }
 }
