@@ -53,4 +53,8 @@ class SongService(
             }
             .toList()
     }
+
+    fun getById(id: Long): SongResponseDto {
+        return songMapper.songModelToSong(songRepository.findById(id).orElseThrow { RuntimeException("Song not found") })
+    }
 }
